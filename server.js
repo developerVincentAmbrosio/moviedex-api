@@ -3,7 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-const MOVIES = require('./movies-data.json')
+const MOVIEDEX = require('./movies-data.json')
 
 const app = express()
 
@@ -23,7 +23,7 @@ app.use(function validateBearerToken(req, res, next) {
 })
 
 app.get('/movie', function handleGetMovies(req, res) {
-  let response = MOVIES;  
+  let response = MOVIEDEX;  
 
     if (req.query.genre) {
         response = response.filter(movie =>
