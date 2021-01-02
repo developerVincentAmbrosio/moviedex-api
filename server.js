@@ -4,7 +4,6 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const MOVIES = require('./movies-data.json')
-const { response } = require('express')
 
 const app = express()
 
@@ -23,37 +22,24 @@ app.use(function validateBearerToken(req, res, next) {
     next()
 })
 
-const validMovies = {
-    "filmtv_ID": 2,
-    "film_title": "Bugs Bunny's Third Movie: 1001 Rabbit Tales",
-    "year": 1982,
-    "genre": "Animation",
-    "duration": 76,
-    "country": "United States",
-    "director": "David Detiege, Art Davis, Bill Perez",
-    "actors": "N/A",
-    "avg_vote": 7.7,
-    "votes": 28
-  }
-
 app.get('/movie', function handleGetMovies(req, res) {
   let response = MOVIES;  
 
     if (req.query.genre) {
         response = response.filter(movie =>
-            movie.genre.toLowerCase().includes(req.query.genre.toLocaleLowerCase())
+            movie.genre.toLowerCase().includes(req.query.genre.toLowerCase())
         )
     }
 
     if (req.query.country) {
         response = response.filter(movie =>
-            movie.counrty.toLowerCase().includes(req.query.counrty.toLowerCase())
+            movie.country.toLowerCase().includes(req.query.country.toLowerCase())
         )
     }
 
     if (req.query.avg_vote) {
         response = response.filter(movie =>
-            Number(movie.avg_vote) >= Number(req.avg_vote)
+            Number(movie.avg_vote) >= Number(req.query.avg_vote)
         )
     }
 
